@@ -8,32 +8,50 @@
     <title>Order Pizza</title>
   </head>
   <body>
-    <div class="text-center center-block" id="selection">
-      <div id="size">
-        <h5>Size:</h5>
-        <button class="btn btn-danger" id="L" type="button">Large</button>
-        <button class="btn btn-danger" id="M" type="button">Medium</button>
-        <button class="btn btn-danger" id="S" type="button">Personal</button>
+    <div class="row container center-block">
+      <div class="page-header text-center">
+        <h2>Create Your Pizza</h2>
       </div>
-      <hr>
-      <div id="crust">
-        <h5>Crust:</h5>
-        <button class="btn btn-danger" id="Pan" type="button">Pan</button>
-        <button class="btn btn-danger" id="Hand Tossed" type="button">Hand Tossed</button>
-        <button class="btn btn-danger" id="Deep Dish" type="button">Deep Dish</button>
-        <button class="btn btn-danger" id="Stuffed Crust" type="button">Stuffed Crust</button>
-        <button class="btn btn-danger" id="Thin Crust" type="button">Thin Crust</button>
+      <div class="col-md-8 text-center" id="selection">
+        <div id="size">
+          <h5>Size:</h5>
+          <button class="btn btn-danger" id="L" type="button">Large</button>
+          <button class="btn btn-danger" id="M" type="button">Medium</button>
+          <button class="btn btn-danger" id="S" type="button">Personal</button>
+        </div>
+        <hr>
+        <div id="crust">
+          <h5>Crust:</h5>
+          <button class="btn btn-danger" id="Pan" type="button">Pan</button>
+          <button class="btn btn-danger" id="Hand Tossed" type="button">Hand Tossed</button>
+          <button class="btn btn-danger" id="Deep Dish" type="button">Deep Dish</button>
+          <button class="btn btn-danger" id="Stuffed Crust" type="button">Stuffed Crust</button>
+          <button class="btn btn-danger" id="Thin Crust" type="button">Thin Crust</button>
+        </div>
+        <hr>
+        <div id="toppings">
+          <h5>Toppings:</h5>
+        </div>
+        <hr>
+        <div id="done">
+          <button class="btn btn-success" id="save">Done</button>
+          <button class="btn btn-info ordering" id="new">Add Another Pizza</button>
+          <button class="btn btn-info ordering" id="order">Proceed to Checkout</button>
+        </div>
       </div>
-      <hr>
-      <div id="toppings">
-        <h5>Toppings:</h5>
+      <div class="col-md-4" id="pizza-info">
+        <div id="info-top">
+          <h3 class="text-center"></h3>
+        </div>
+        <hr>
+        <ul id="info-list">
+        </ul>
+        <hr>
+        <div>
+          <ul id="pizza-list">
+          </ul>
+        </div>
       </div>
-      <hr>
-      <div id="done">
-        <button class="btn btn-success" id="save">Done</button>
-        <button class="btn btn-info ordering" id="new">Add Another Pizza</button>
-        <button class="btn btn-info ordering" id="new">Proceed to Checkout</button>
-      </div>
-    </div>
+    </div><!--end row-->
   </body>
 </html>

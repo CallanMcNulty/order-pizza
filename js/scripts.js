@@ -11,7 +11,7 @@ allToppings = [
   new Topping("Olives", 100),
   new Topping("Diced Tomatoes", 90),
   new Topping("Pineapple", 80),
-  new Topping("Extra Cheesa", 50),
+  new Topping("Extra Cheese", 50),
 ];
 
 function Pizza(size, crustType) {
@@ -52,6 +52,24 @@ Pizza.prototype.addRemoveTopping = function(toppingIndex) {
     this.toppings = this.toppings.slice(0,indexOnPizza).concat(this.toppings.slice(indexOnPizza+1,this.toppings.length));
   }
 }
+Pizza.prototype.name = function() {
+  var name = "";
+  if(this.size==="L") {
+    name+="Large "
+  } else if(this.size==="S") {
+    name+="Personal "
+  } else {
+    name+="Medium "
+  }
+  name = name+this.crustType+" Pizza";
+  if(this.toppings.length>0) {
+    name = name+" with "+this.toppings[0].type;
+  }
+  if(this.toppings.length>1) {
+    name+=" etc."
+  }
+  return name;
+}
 
 function Topping(type, price) {
   this.type = type;
@@ -67,39 +85,72 @@ Topping.prototype.getPrice = function(size) {
   }
 }
 
-currentPizza = new Pizza("M","Pan");
 order = [];
 
 $(document).ready(function() {
   for(var i=0; i<allToppings.length; i++) {
     $("#toppings").append("<button class='btn btn-warning' id='"+i.toString()+"' type='button'>"+allToppings[i].type+"</button>");
   }
+  var beginPizza = function() {
+    currentPizza = new Pizza("M","Pan");
+    $("button").removeAttr("disabled","disabled");
+    $("button").removeClass("active");
+    $("#M").addClass("active");
+    $("#Pan").addClass("active");
+    $(".ordering").hide();
+    $("#save").show();
+  }
+  beginPizza();
+  var displayPizzaInfo = function() {
+    $("#info-top h3").text("$"+(currentPizza.calculatePrice()/100).toFixed(2).toString());
+    $("#info-list").empty();
+    $("#info-list").append("<li><span class='info-type'>Size: </span>"+currentPizza.size+"</li>");
+    $("#info-list").append("<li><span class='info-type'>Crust: </span>"+currentPizza.crustType+"</li>");
+    if(currentPizza.toppings.length > 0) {
+      $("#info-list").append("<li><span class='info-type'>Toppings: </span><ul id='topping-info'>");
+      currentPizza.toppings.forEach(function(t) {
+        $("#topping-info").append("<li>"+t.type+"</li>");
+      });
+      $("#info-list").append("</li>");
+    }
+  }
+  displayPizzaInfo();
+  var displayOrder = function() {
+    if(order.length > 0) {
+      $("#pizza-list").empty();
+      $("#pizza-list").append("<h3>Your Order:</h3>");
+      order.forEach(function(pizza) {
+        $("#pizza-list").append("<li>"+pizza.name()+"</li>");
+      });
+    }
+  }
   $("#size button").click(function() {
     currentPizza.size = $(this).attr("id");
     $("#size button").removeClass("active");
     $(this).toggleClass("active");
+    displayPizzaInfo();
   });
   $("#crust button").click(function() {
     currentPizza.crustType = $(this).attr("id");
     $("#crust button").removeClass("active");
     $(this).toggleClass("active");
+    displayPizzaInfo();
   });
   $("#toppings button").click(function() {
     currentPizza.addRemoveTopping(parseInt($(this).attr("id")));
     $(this).toggleClass("active");
+    displayPizzaInfo();
   });
   $("#save").click(function() {
     order.push(currentPizza);
     $(".ordering").show();
     $(this).hide();
+    displayOrder();
+    $("#size button").attr("disabled", "disabled");
+    $("#crust button").attr("disabled", "disabled");
+    $("#toppings button").attr("disabled", "disabled");
+  });
+  $("#new").click(function() {
+    beginPizza();
   });
 });
-
-
-
-//test
-// var myPizza = new Pizza("M","Pan");
-// myPizza.addTopping(4);
-// myPizza.addTopping(4);
-// myPizza.addTopping(5);
-// console.log(myPizza.calculatePrice());
