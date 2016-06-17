@@ -24,8 +24,12 @@ This webpage will allow a user to create a custom pizza. Various sizes, toppings
   * Example Output: 1350
 
 * Given a multiple toppings for one pizza, it will calculate the price for each topping and add it to the total price of the pizza.
-  * Example Input: "Large" ["Ham", "Diced Tomatoes"]
+  * Example Input: "Large", ["Ham", "Diced Tomatoes"]
   * Example Output: 1485
+
+* Given a type of crust, it will adjust the price accordingly.
+  * Example Input: "Large", "Deep Dish", ["Ham", "Diced Tomatoes"]
+  * Example Output: 1585
 
 ## Support and contact details
 

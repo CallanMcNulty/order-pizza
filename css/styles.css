@@ -1,0 +1,11 @@
+button {
+  margin: 10px;
+}
+
+#selection {
+  max-width: 800px;
+}
+
+.ordering {
+  display: none;
+}
