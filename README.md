@@ -6,7 +6,7 @@
 
 ## Description
 
-This webpage will allow a user to create a custom pizza. Various sizes, toppings, and crust types will be available. A price for the pizza will be calculated based upon the user's selections.
+This webpage will allow a user to create a custom pizza. Various sizes, toppings, and crust types will be available. A price for the pizza will be calculated based upon the user's selections. If a user wishes to create multiple pizzas they can be added to an order and the total price of the order can be calculated.
 
 ## Setup/Installation Requirements
 
@@ -47,6 +47,6 @@ I can be contacted for support at jabberwocky222@gmail.com
 * CSS
 * Bootstrap Framework
 
-### License
+### Copyright
 
 Copyright (c) 2016 Callan McNulty

@@ -1,4 +1,6 @@
-//global var
+//##########################
+//     BUSINESS LOGIC
+//##########################
 allToppings = [
   new Topping("Ham", 100),
   new Topping("Sausage", 120),
@@ -13,7 +15,7 @@ allToppings = [
   new Topping("Pineapple", 80),
   new Topping("Extra Cheese", 50),
 ];
-
+//  PIZZA OBJECT
 function Pizza(size, crustType) {
   this.size = size;
   this.crustType = crustType;
@@ -71,6 +73,7 @@ Pizza.prototype.name = function() {
   return name;
 }
 
+//  TOPPING OBJECT
 function Topping(type, price) {
   this.type = type;
   this.price = price;
@@ -85,6 +88,7 @@ Topping.prototype.getPrice = function(size) {
   }
 }
 
+// MULTI-PIZZA FUNCTIONALITY
 order = [];
 
 var orderPrice = function() {
@@ -96,12 +100,13 @@ var orderPrice = function() {
 }
 
 
-
-
+//##########################
+//     USER INTERFACE
+//##########################
 var dollarFormat = function(val) {
   return "$"+(val/100).toFixed(2).toString();
 }
-
+//  Drawing Stuff
 var drawPizza = function(pizza) {
   var rad = 0;
   if(pizza.size==="L") {
@@ -183,10 +188,18 @@ var drawTopping = function(size, toppingType) {
           ctx.arc(i, j, 7, 0, 2*Math.PI, true);
           ctx.fill();
         }
+        if(toppingType==="Ham") {
+          ctx.fillStyle = "#F2C2CC";
+          ctx.beginPath();
+          ctx.moveTo(i-6,j-6);
+          ctx.lineTo(i+6,j-6);
+          ctx.lineTo(i,j+6);
+          ctx.fill();
+        }
         if(toppingType==="Onion") {
           ctx.strokeStyle = "#C468A9";
           ctx.beginPath();
-          ctx.arc(i, j, 7, 0, Math.PI, true);
+          ctx.arc(i, j, 7, 0, Math.PI/2, true);
           ctx.lineWidth = 3;
           ctx.stroke();
         }
@@ -210,6 +223,7 @@ var drawTopping = function(size, toppingType) {
     }
   }
 }
+
 $(document).ready(function() {
   for(var i=0; i<allToppings.length; i++) {
     $("#toppings").append("<button class='btn btn-warning' id='"+i.toString()+"' type='button'>"+allToppings[i].type+"</button>");
@@ -224,12 +238,18 @@ $(document).ready(function() {
     $("#save").show();
   }
   beginPizza();
-  //drawPizza(currentPizza);
-  //drawTopping(currentPizza.size, "Mushrooms")
+
   var displayPizzaInfo = function() {
     $("#info-top h3").text(dollarFormat(currentPizza.calculatePrice()));
     $("#info-list").empty();
-    $("#info-list").append("<li><span class='info-type'>Size: </span>"+currentPizza.size+"</li>");
+    if(currentPizza.size==="L") {
+      var s = "Large";
+    } else if(currentPizza.size==="M") {
+      var s = "Medium";
+    } else {
+      var s = "Personal";
+    }
+    $("#info-list").append("<li><span class='info-type'>Size: </span>"+s+"</li>");
     $("#info-list").append("<li><span class='info-type'>Crust: </span>"+currentPizza.crustType+"</li>");
     if(currentPizza.toppings.length > 0) {
       $("#info-list").append("<li><span class='info-type'>Toppings: </span><ul id='topping-info'>");
@@ -241,11 +261,12 @@ $(document).ready(function() {
     drawPizza(currentPizza);
   }
   displayPizzaInfo();
+
   var displayOrder = function() {
     $("#pizza-list").empty();
-    $("#pizza-list").append("<h3>Your Order:</h3>");
+    $("#pizza-list").append("<h3>Your Order:</h3><hr>");
     for(var i=0; i<order.length; i++) {
-      $("#pizza-list").append("<li>"+order[i].name()+"<button class='btn btn-xs btn-default' id='"+i.toString()+"'>X</button></li>");
+      $("#pizza-list").append("<li>"+order[i].name()+"<button class='btn btn-xs btn-default' id='"+i.toString()+"'>X</button><span class='info-type'>"+dollarFormat(order[i].calculatePrice())+"</span></li><hr>");
     }
     $("#order-price").text("Total Price: "+dollarFormat(orderPrice()));
     $("#pizza-list button").click(function() {
@@ -280,7 +301,9 @@ $(document).ready(function() {
     $("#crust button").attr("disabled", "disabled");
     $("#toppings button").attr("disabled", "disabled");
   });
-
+  $("#order").click(function() {
+    alert("This is a demo. Checkout not currently available.");
+  })
   $("#new").click(function() {
     beginPizza();
     displayPizzaInfo();

@@ -1,3 +1,19 @@
+body {
+  background-color: #DDDDDD;
+  color: #444444;
+}
+
+.row {
+  margin-top: 30px;
+  background-color: white;
+  margin-bottom: 50px;
+  padding-bottom: 20px;
+}
+
+#selection {
+  border-right: 1px solid #EEEEEE;
+}
+
 button {
   margin: 10px;
 }
@@ -15,21 +31,18 @@ button {
   width: 200px;
 }
 
-/*canvas {
+canvas {
   margin-top: 30px;
-  width: 80%;
-  height: 300px;
-  border: 1px solid black;
-}*/
+}
 
 .info-type {
   font-weight: bold;
 }
 
+#pizza-list .info-type {
+  float: right;
+}
+
 #pizza-list, #info-list{
   font-size: 16px;
 }
-
-/*.col-md-3, .col-md-6 {
-  border: 1px solid black;
-}*/
