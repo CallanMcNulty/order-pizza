@@ -31,6 +31,10 @@ This webpage will allow a user to create a custom pizza. Various sizes, toppings
   * Example Input: "Large", "Deep Dish", ["Ham", "Diced Tomatoes"]
   * Example Output: 1585
 
+* Given multiple pizzas in one order, it will calculate the price of each and add them together to get the price of the order.
+  * Example Input: "Large" "Pan", "Medium" "Stuffed Crust"
+  * Example Output: 2400
+
 ## Support and contact details
 
 I can be contacted for support at jabberwocky222@gmail.com

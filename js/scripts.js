@@ -1,7 +1,7 @@
 //global var
 allToppings = [
   new Topping("Ham", 100),
-  new Topping("Suasage", 120),
+  new Topping("Sausage", 120),
   new Topping("Pepperoni", 80),
   new Topping("Green Pepper", 80),
   new Topping("Onion", 80),
@@ -102,6 +102,114 @@ var dollarFormat = function(val) {
   return "$"+(val/100).toFixed(2).toString();
 }
 
+var drawPizza = function(pizza) {
+  var rad = 0;
+  if(pizza.size==="L") {
+    rad+=160;
+  } else if(pizza.size==="M") {
+    rad+=110;
+  } else {
+    rad+=70;
+  }
+  var crustOffset = 0;
+  if(pizza.crustType==="Deep Dish" || pizza.crustType==="Stuffed Crust") {
+    crustOffset = 5;
+  } else if(pizza.crustType==="Thin Crust") {
+    crustOffset = -5;
+  }
+  var c = document.getElementById("picture-canvas");
+  var ctx = c.getContext("2d");
+  ctx.clearRect(0,0,c.width,c.height);
+  ctx.fillStyle = "#D6B592";
+  ctx.beginPath();
+  ctx.arc(c.width/2, c.height/2, rad+crustOffset, 0, 2*Math.PI, true);
+  ctx.fill();
+  ctx.fillStyle = "#C23E3E";
+  ctx.beginPath();
+  ctx.arc(c.width/2, c.height/2, rad-15, 0, 2*Math.PI, true);
+  ctx.fill();
+  ctx.fillStyle = "#FCEAB6";
+  ctx.beginPath();
+  ctx.arc(c.width/2, c.height/2, rad-25, 0, 2*Math.PI, true);
+  ctx.fill();
+  pizza.toppings.forEach(function(t) {
+    var toppingType = t.type;
+    drawTopping(pizza.size, toppingType);
+  });
+}
+var drawTopping = function(size, toppingType) {
+  var c = document.getElementById("picture-canvas");
+  var ctx = c.getContext("2d");
+  var rad = 0;
+  if(size==="L") {
+    rad+=115;
+  } else if(size==="M") {
+    rad+=75;
+  } else {
+    rad+=35;
+  }
+  for(var i=c.width/2-rad; i<c.width/2+rad; i+=5) {
+    for(var j=c.height/2-rad; j<c.height/2+rad; j+=5) {
+      if(Math.random()<0.03) {
+        if(toppingType==="Bacon") {
+          ctx.fillStyle = "#AD5050";
+          ctx.fillRect(i,j,15,7);
+        }
+        if(toppingType==="Diced Tomatoes") {
+          ctx.fillStyle = "#D96A6A";
+          ctx.fillRect(i,j,7,7);
+        }
+        if(toppingType==="Green Pepper") {
+          ctx.strokeStyle = "#519648";
+          ctx.beginPath();
+          ctx.arc(i, j, 10, 0, Math.PI, true);
+          ctx.lineWidth = 3;
+          ctx.stroke();
+        }
+        if(toppingType==="Olives") {
+          ctx.strokeStyle = "#2A301C";
+          ctx.beginPath();
+          ctx.arc(i, j, 5, 0, 2*Math.PI, true);
+          ctx.lineWidth = 3;
+          ctx.stroke();
+        }
+        if(toppingType==="Pineapple") {
+          ctx.fillStyle = "#F2F230";
+          ctx.fillRect(i,j,7,7);
+        }
+        if(toppingType==="Pepperoni") {
+          ctx.fillStyle = "#8A3227";
+          ctx.beginPath();
+          ctx.arc(i, j, 7, 0, 2*Math.PI, true);
+          ctx.fill();
+        }
+        if(toppingType==="Onion") {
+          ctx.strokeStyle = "#C468A9";
+          ctx.beginPath();
+          ctx.arc(i, j, 7, 0, Math.PI, true);
+          ctx.lineWidth = 3;
+          ctx.stroke();
+        }
+        if(toppingType==="Sausage" || toppingType==="Beef") {
+          ctx.fillStyle = "#7D5C39";
+          ctx.beginPath();
+          ctx.arc(i, j, 4, 0, 2*Math.PI, true);
+          ctx.fill();
+        }
+        if(toppingType==="Mushrooms") {
+          ctx.fillStyle = "#D6CCC3";
+          ctx.beginPath();
+          ctx.arc(i+2, j, 4, 0, 2*Math.PI, true);
+          ctx.fill();
+          ctx.beginPath();
+          ctx.arc(i-2, j, 4, 0, 2*Math.PI, true);
+          ctx.fill();
+          ctx.fillRect(i-2,j,4,7);
+        }
+      }
+    }
+  }
+}
 $(document).ready(function() {
   for(var i=0; i<allToppings.length; i++) {
     $("#toppings").append("<button class='btn btn-warning' id='"+i.toString()+"' type='button'>"+allToppings[i].type+"</button>");
@@ -116,6 +224,8 @@ $(document).ready(function() {
     $("#save").show();
   }
   beginPizza();
+  //drawPizza(currentPizza);
+  //drawTopping(currentPizza.size, "Mushrooms")
   var displayPizzaInfo = function() {
     $("#info-top h3").text(dollarFormat(currentPizza.calculatePrice()));
     $("#info-list").empty();
@@ -128,6 +238,7 @@ $(document).ready(function() {
       });
       $("#info-list").append("</li>");
     }
+    drawPizza(currentPizza);
   }
   displayPizzaInfo();
   var displayOrder = function() {

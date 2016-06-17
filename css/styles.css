@@ -15,6 +15,13 @@ button {
   width: 200px;
 }
 
+/*canvas {
+  margin-top: 30px;
+  width: 80%;
+  height: 300px;
+  border: 1px solid black;
+}*/
+
 .info-type {
   font-weight: bold;
 }
