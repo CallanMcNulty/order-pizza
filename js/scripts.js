@@ -87,6 +87,21 @@ Topping.prototype.getPrice = function(size) {
 
 order = [];
 
+var orderPrice = function() {
+  var totalPrice = 0;
+  order.forEach(function(pizza) {
+    totalPrice+=pizza.calculatePrice();
+  });
+  return totalPrice;
+}
+
+
+
+
+var dollarFormat = function(val) {
+  return "$"+(val/100).toFixed(2).toString();
+}
+
 $(document).ready(function() {
   for(var i=0; i<allToppings.length; i++) {
     $("#toppings").append("<button class='btn btn-warning' id='"+i.toString()+"' type='button'>"+allToppings[i].type+"</button>");
@@ -102,7 +117,7 @@ $(document).ready(function() {
   }
   beginPizza();
   var displayPizzaInfo = function() {
-    $("#info-top h3").text("$"+(currentPizza.calculatePrice()/100).toFixed(2).toString());
+    $("#info-top h3").text(dollarFormat(currentPizza.calculatePrice()));
     $("#info-list").empty();
     $("#info-list").append("<li><span class='info-type'>Size: </span>"+currentPizza.size+"</li>");
     $("#info-list").append("<li><span class='info-type'>Crust: </span>"+currentPizza.crustType+"</li>");
@@ -116,13 +131,17 @@ $(document).ready(function() {
   }
   displayPizzaInfo();
   var displayOrder = function() {
-    if(order.length > 0) {
-      $("#pizza-list").empty();
-      $("#pizza-list").append("<h3>Your Order:</h3>");
-      order.forEach(function(pizza) {
-        $("#pizza-list").append("<li>"+pizza.name()+"</li>");
-      });
+    $("#pizza-list").empty();
+    $("#pizza-list").append("<h3>Your Order:</h3>");
+    for(var i=0; i<order.length; i++) {
+      $("#pizza-list").append("<li>"+order[i].name()+"<button class='btn btn-xs btn-default' id='"+i.toString()+"'>X</button></li>");
     }
+    $("#order-price").text("Total Price: "+dollarFormat(orderPrice()));
+    $("#pizza-list button").click(function() {
+      var removeIndex = parseInt($(this).attr("id"));
+      order = order.slice(0,removeIndex).concat(order.slice(removeIndex+1,order.length));
+      displayOrder();
+    });
   }
   $("#size button").click(function() {
     currentPizza.size = $(this).attr("id");
@@ -150,7 +169,9 @@ $(document).ready(function() {
     $("#crust button").attr("disabled", "disabled");
     $("#toppings button").attr("disabled", "disabled");
   });
+
   $("#new").click(function() {
     beginPizza();
+    displayPizzaInfo();
   });
 });
