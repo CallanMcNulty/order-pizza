@@ -1,4 +1,4 @@
-# Ping Pong
+# Order Pizza
 
 #### Allows user to choose a pizza to order. June 17, 2016
 
